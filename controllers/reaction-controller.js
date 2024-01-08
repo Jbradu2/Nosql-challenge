@@ -1,6 +1,7 @@
 const { Thought } = require('../models');
 
 const reactionController = {
+  //createThoghtReaction
   createThoughtReaction: async (req, res) => {
     const thoughtId = req.params.thoughtId;
     const { reactionBody, username } = req.body;
@@ -19,6 +20,7 @@ const reactionController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
+//deleteThoughtReaction 
 
   deleteThoughtReaction: async (req, res) => {
     const thoughtId = req.params.thoughtId;

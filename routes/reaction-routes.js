@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { deleteReaction } = require('../controllers/reaction-controller');
+const { createReaction, deleteReaction } = require('../controllers/reaction-controller');
 
-router.route('/:reactionId').delete(deleteReaction);
+router.route('/:thoughtId').post(createReaction);
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction);
 
 module.exports = router;

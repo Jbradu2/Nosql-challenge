@@ -24,7 +24,7 @@ const thoughtController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
-//createThought
+
   createThought: async (req, res) => {
     const { thoughtText, username, userId } = req.body;
     try {
@@ -37,7 +37,7 @@ const thoughtController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
-//updatethought
+
   updateThought: async (req, res) => {
     const thoughtId = req.params.thoughtId;
     const { thoughtText } = req.body;
@@ -66,6 +66,28 @@ const thoughtController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+
+  addReaction: async (req, res) => {
+    const thoughtId = req.params.thoughtId;
+    const newReaction = req.body;
+    try {
+      // Add the reaction to the thought
+      const updatedThought = await Thought.findByIdAndUpdate(
+        thoughtId,
+        { $push: { reactions: newReaction } },
+        { new: true }
+      );
+
+      if (!updatedThought) {
+        return res.status(404).json({ message: 'Thought not found' });
+      }
+
+      res.json(updatedThought);
+    } catch (error) {
+      console.error('Error adding reaction:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   },
 };
